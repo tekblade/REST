@@ -1,0 +1,6 @@
+REST\InterestsRepository.class
+REST\MyRestController.class
+REST\App.class
+REST\Interests.class
+REST\User.class
+REST\UserRepository.class

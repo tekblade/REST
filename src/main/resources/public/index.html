@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading Image</title>
+</head>
+<body>
+	<script>
+	function getUnique(){
+		const Http = new XMLHttpRequest();
+		const url='http://localhost:8080/getuniqueuserid';
+		Http.open("GET", url);
+		Http.send();
+		Http.onreadystatechange=function () {
+			document.getElementById("id1").innerHTML = `${Http.responseText}`;
+		}
+	}
+	function post(){
+		let Id=document.getElementsByName("Id")[0].value;
+		let sport=document.getElementsByName("sport")[0].value;
+		let subject=document.getElementsByName("subject")[0].value;
+		const Http = new XMLHttpRequest();
+		const url='http://localhost:8080/setspecifieduserinterests';
+		Http.open("POST", url,false);
+		Http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+		let help;
+		Http.onreadystatechange= function () {
+			if(Http.readyState == 4 && Http.status == 200) {			 
+			document.getElementById("id2").innerHTML = `${Http.responseText}`;		
+			}
+		}
+		Http.send(JSON.stringify({"userId":`${Id}`, "subject":`${subject}`, "sport":`${sport}`}));
+		let container = document.getElementById("postForm");
+		let content = container.innerHTML;
+		container.innerHTML= content; 
+	}
+	function put(){
+		let Id=document.getElementsByName("putId")[0].value;
+		let sport=document.getElementsByName("putSport")[0].value;
+		let subject=document.getElementsByName("putSubject")[0].value;
+		const Http = new XMLHttpRequest();
+		const url='http://localhost:8080/updateinterests';
+		Http.open("PUT", url,false);
+		Http.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+		let help;
+		Http.onreadystatechange= function () {
+			if(Http.readyState == 4 && Http.status == 200) {
+				document.getElementById("id3").innerHTML = `${Http.responseText}`;	
+			}
+		}
+		Http.send(JSON.stringify({"userId":`${Id}`, "subject":`${subject}`, "sport":`${sport}`}));
+		let container = document.getElementById("putForm");
+		let content = container.innerHTML;
+		container.innerHTML= content; 
+	}
+	function get(){
+		let Id=document.getElementsByName("getId")[0].value;
+		const Http = new XMLHttpRequest();
+		const url=`http://localhost:8080/readspecifieduser/${Id}`;
+		let help;
+		Http.onreadystatechange= function () {
+			if(Http.readyState == 4 && Http.status == 200) {
+				document.getElementById("id4").innerHTML = `${Http.responseText}`;	
+			}
+		}
+		Http.open("GET",url,false);
+		Http.send(null);
+		let container = document.getElementById("getForm");
+		let content = container.innerHTML;
+		container.innerHTML= content; 	
+	} 
+	function delette(){
+		let Id=document.getElementsByName("deleteId")[0].value;
+		const Http = new XMLHttpRequest();
+		const url=`http://localhost:8080/deletespecifieduser/${Id}`;
+		let help;
+		Http.onreadystatechange= function () {
+			if(Http.readyState == 4 && Http.status == 200) {
+				document.getElementById("id5").innerHTML = `${Http.responseText}`;	
+			}
+		}
+		Http.open("DELETE",url,false);
+		Http.send(null);
+		let container = document.getElementById("deleteForm");
+		let content = container.innerHTML;
+		container.innerHTML= content; 
+	}
+	</script>
+	<h1>Welcome in Ajax(XMLHttpRequest)</h1>
+	
+	<fieldset>
+		<legend>Generate unique User ID</legend>
+		<button type="button" onclick="getUnique()">GenerateID</button>
+		<p id="id1"></p>
+	</fieldset>
+	
+	<fieldset>
+		<legend>Post Data</legend>
+		<form onsubmit="#" id="postForm">
+			<label>user's ID in the system<br />
+			<input type=”text” name="Id"/></label><br />
+			<label>user's favourite sport<br />
+			<input type=”text” name="sport"/></label><br />
+			<label>user's favourite school subject<br />
+			<input type=”text” name="subject"/></label><br />
+			<input type="button" name="submit" value="Post" onclick="post();" />
+		</form>
+		<p id="id2"></p>
+	</fieldset>
+
+	<fieldset>
+		<legend>Update Data</legend>
+		<form onsubmit="#" id="putForm">
+			<label>user's ID in the system<br />
+			<input type=”text” name="putId"/></label><br />
+			<label>user's favourite sport<br />
+			<input type=”text” name="putSport"/></label><br />
+			<label>user's favourite school subject<br />
+			<input type=”text” name="putSubject"/></label><br />
+			<input type="button" name="submit" value="Update" onclick="put();" />
+		</form>
+		<p id="id3"></p>
+	</fieldset>
+
+	<fieldset>
+		<legend>Get Data</legend>
+		<form onsubmit="#" id="getForm">
+			<label>Get specified user's Data<br />
+			<input type=”text” name="getId"/></label><br />
+			<input type="button" name="submit" value="Get" onclick="get();" />
+		</form>
+		<p id="id4"></p>
+	</fieldset>
+
+	<fieldset>
+		<legend>Delete Data</legend>
+		<form onsubmit="#" id="deleteForm">
+			<label>Delete specified user's Data<br />
+			<input type=”text” name="deleteId"/></label><br />
+			<input type="button" name="submit" value="Delete" onclick="delette();" />
+		</form>
+		<p id="id5"></p>
+	</fieldset>
+
+</body>
+</html>
